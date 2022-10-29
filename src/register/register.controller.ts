@@ -1,7 +1,6 @@
-import { Body, Controller, HttpException, HttpStatus, Post } from '@nestjs/common';
-
+import { Body, Controller, Post } from '@nestjs/common';
 import { RegisterService } from './register.service';
-
+import { CreateRegisterDTO} from './dto/createRegister.dto'
 
 
 @Controller('register')
@@ -10,16 +9,9 @@ export class RegisterController {
     constructor(private readonly registerService: RegisterService) {}
 
 @Post()
-    async RegisterUser(@Body() req) {
-    const {name, email, password, site, phone} = req
-
-    if(!name) {
-        throw new HttpException('O nome não foi encontrado', HttpStatus.FORBIDDEN);
-    }
-    return this.registerService.registerUser(name, email, password, site, phone);
-
-    }
-
-
+create(@Body() req:CreateRegisterDTO){
+    return this.registerService.create(req);
+}
+ 
 
 }
